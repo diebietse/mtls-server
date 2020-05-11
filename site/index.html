@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html style="height: 100%;">
+  <head>
+    <title>mTLS Test Site</title>
+    {{if .MTLSValid}}
+    <link rel="icon" type="image/svg+xml" href="images/mtls-on.svg" />
+    {{else}}
+    <link rel="icon" type="image/svg+xml" href="images/mtls-off.svg" />
+    {{end}}
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <style>
+      .card {
+        background-color: #00000008;
+      }
+      .fa {
+        font-size: 1.35rem;
+        float: right;
+      }
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body style="height: 100%; display: flex;">
+    <div style="height: 100%; margin: auto; display: flex; flex-flow: column; justify-content: center;">
+      <div class="card">
+        <div class="card-body">
+          <div class="card-title">
+            <h5 class="d-inline-block">TLS Information</h5>
+            {{if .MTLSValid}}
+            <span class="badge badge-success badge-pill align-top">mTLS verified</span>
+            {{else}}
+            <span class="badge badge-danger badge-pill align-top">mTLS not verified</span>
+            {{end}}
+          </div>
+          <p class="card-text">
+            Download the provided <code>.p12</code> client certificate.<br />
+            The password for the certificate is <code>mtls</code>.
+          </p>
+          <a href="{{ .ClientCertificatePath }}" class="btn btn-sm btn-secondary">Download .p12</a>
+          <a href="https://diebietse.com/mtls-server" class="btn btn-sm btn-secondary fa fa-github"></a>
+        </div>
+      </div>
+
+      {{ if .MTLSValid }}
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Presented Certificates</h5>
+          <table class="table table-striped table-sm">
+            <tr>
+              <th>Issuer CN</th>
+              <th>Subject CN</th>
+              <th>Not Before</th>
+              <th>Not After</th>
+              <th>CA</th>
+            </tr>
+            {{ range .PresentedCertificates }}
+            <tr>
+              <td>{{ .IssuerCommonName }}</td>
+              <td>{{ .SubjectCommonName }}</td>
+              <td>{{ .NotBefore }}</td>
+              <td>{{ .NotAfter }}</td>
+              <td>
+                {{if .IsCA}}
+                <i class="material-icons text-success">done</i>
+                {{else}}
+                <i class="material-icons text-danger">clear</i>
+                {{end}}
+              </td>
+            </tr>
+            {{ end }}
+          </table>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Verified Certificate Chains</h5>
+          {{ range $chainNumber, $chain := .VerifiedChains }}
+          <h6 class="card-subtitle mb-2 text-muted">Chain {{ $chainNumber }}</h6>
+          <table class="table table-striped table-sm">
+            <tr>
+              <th>Issuer CN</th>
+              <th>Subject CN</th>
+              <th>Not Before</th>
+              <th>Not After</th>
+              <th>CA</th>
+            </tr>
+            {{ range $chain }}
+            <tr>
+              <td>{{ .IssuerCommonName }}</td>
+              <td>{{ .SubjectCommonName }}</td>
+              <td>{{ .NotBefore }}</td>
+              <td>{{ .NotAfter }}</td>
+              <td>
+                {{if .IsCA}}
+                <i class="material-icons text-success">done</i>
+                {{else}}
+                <i class="material-icons text-danger">clear</i>
+                {{end}}
+              </td>
+            </tr>
+            {{ end }}
+          </table>
+          {{ end }}
+        </div>
+      </div>
+      {{ end }}
+    </div>
+  </body>
+</html>

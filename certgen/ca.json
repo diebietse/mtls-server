@@ -1,0 +1,20 @@
+{
+  "CN": "ExampleCA",
+  "key": {
+    "algo": "rsa",
+    "size": 2048
+  },
+  "ca": {
+    "expiry": "262800h",
+    "pathlen": 1
+  },
+  "names": [
+    {
+      "C": "ZA",
+      "L": "Cape Town",
+      "O": "exampleorg.com",
+      "OU": "www",
+      "ST": "Western Cape"
+    }
+  ]
+}
