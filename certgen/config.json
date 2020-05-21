@@ -1,0 +1,8 @@
+{
+  "signing": {
+    "default": {
+      "usages": ["client auth"],
+      "expiry": "262800h"
+    }
+  }
+}
