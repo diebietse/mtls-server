@@ -17,7 +17,9 @@ WORKDIR /certs/
 
 COPY certgen certgen
 
-RUN cd certgen && ./genca.sh && ./gencert.sh mtls-example-client
+RUN cd certgen && chmod +x genca.sh && chmod +x gencert.sh
+
+RUN  cd certgen && ./genca.sh && ./gencert.sh mtls-example-client
 
 FROM alpine
 
