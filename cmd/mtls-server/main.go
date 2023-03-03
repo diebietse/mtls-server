@@ -4,7 +4,6 @@ import (
 	"crypto/x509"
 	"errors"
 	"flag"
-	"io/ioutil"
 	"log"
 	"os"
 
@@ -47,7 +46,7 @@ func main() {
 }
 
 func loadClientCA(rootCA string) (*x509.CertPool, error) {
-	pem, err := ioutil.ReadFile(rootCA)
+	pem, err := os.ReadFile(rootCA)
 	if err != nil {
 		return nil, err
 	}

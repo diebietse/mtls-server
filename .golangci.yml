@@ -5,20 +5,17 @@ run:
 linters:
   enable-all: false
   enable:
-    - deadcode
     - dupl
     - errcheck
     - goconst
     - gofmt
-    - golint
     - govet
     - ineffassign
+    - revive
     - staticcheck
-    - structcheck
     - typecheck
     - unconvert
     - unused
-    - varcheck
     - bodyclose
     - gocritic
     - gocognit

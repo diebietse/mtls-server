@@ -6,9 +6,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"html/template"
-	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 
 	"golang.org/x/crypto/acme"
 	"golang.org/x/crypto/acme/autocert"
@@ -141,7 +141,7 @@ func requestHandlerJSON(w http.ResponseWriter, r *http.Request, downloadLink str
 }
 
 func loadWebTemplate(filename string) (*template.Template, error) {
-	file, err := ioutil.ReadFile(filename)
+	file, err := os.ReadFile(filename)
 	if err != nil {
 		return nil, err
 	}
